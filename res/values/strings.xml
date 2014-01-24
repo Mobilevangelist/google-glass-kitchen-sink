@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Hello, World</string>
+    <string name="empty_string"></string>
+    <string name="touchpad_touched">Touchpad touched</string>
+    <string name="swipe_instructions">Swipe left to see more</string>
+    <string name="footnote">This is a card footnote.</string>
+
+    <string name="glass_voice_trigger">say hello</string>
+    <string name="glass_voice_prompt">say something more</string>
+</resources>
