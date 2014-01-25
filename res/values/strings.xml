@@ -1,11 +1,20 @@
 <resources>
 
-    <string name="app_name">Hello, World</string>
-    <string name="empty_string"></string>
-    <string name="touchpad_touched">Touchpad touched</string>
-    <string name="swipe_instructions">Swipe left to see more</string>
+    <string name="app_name">GDK Kitchen Sink</string>
+    <string name="tap_for_menu">Tap to see menu</string>
     <string name="footnote">This is a card footnote.</string>
 
-    <string name="glass_voice_trigger">say hello</string>
-    <string name="glass_voice_prompt">say something more</string>
+    <string name="camera">Camera</string>
+    <string name="voice_input">Voice Input</string>
+    <string name="dpad_input">D-Pad input</string>
+    <string name="gesture_input">Gesture input</string>
+    <string name="text_to_speech">Text to Speech</string>
+    <string name="accelerometer">Accelerometer</string>
+    <string name="GPS">GPS</string>
+    <string name="light">Light sensor</string>
+    <string name="gravity">Gravity sensor</string>
+    <string name="gyroscope">Gyroscope sensor</string>
+    <string name="rotation">Rotation sensor</string>
+
+    <string name="glass_voice_trigger">kitchen sink</string>
 </resources>

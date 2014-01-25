@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="-12px"
             android:text="@string/app_name"
-            android:textSize="110px"
+            android:textSize="80px"
             android:textStyle="normal"
             android:typeface="sans" />
     </LinearLayout>
@@ -29,5 +29,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="29px"
-        android:text="@string/empty_string" />
+        android:text="@string/tap_for_menu" />
 </FrameLayout>

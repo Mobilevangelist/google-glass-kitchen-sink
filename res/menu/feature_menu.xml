@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/cameraMenuItem"
+          android:icon="@drawable/ic_camera_50"
+          android:title="@string/camera"
+            />
+    <item android:id="@+id/voiceInputMenuItem"
+          android:icon="@drawable/ic_message_50"
+          android:title="@string/voice_input"
+            />
+    <item android:id="@+id/dpadInputMenuItem"
+          android:icon="@drawable/ic_camera_50"
+          android:title="@string/dpad_input"
+            />
+    <item android:id="@+id/gestureInputMenuItem"
+          android:icon="@drawable/ic_camera_50"
+          android:title="@string/gesture_input"
+            />
+    <item android:id="@+id/textToSpeechMenuItem"
+          android:icon="@drawable/ic_message_50"
+          android:title="@string/text_to_speech"
+            />
+    <item android:id="@+id/accelerometerMenuItem"
+          android:icon="@drawable/ic_camera_50"
+          android:title="@string/accelerometer"
+            />
+    <item android:id="@+id/gpsMenuItem"
+          android:icon="@drawable/ic_camera_50"
+          android:title="@string/GPS"
+            />
+</menu>
