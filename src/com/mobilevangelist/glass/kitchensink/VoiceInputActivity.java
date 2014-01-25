@@ -40,6 +40,7 @@ public class VoiceInputActivity extends Activity {
   }
 
   public void getVoiceInput() {
+    // Start the intent to ask the user for voice input
     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
     intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something");
     startActivityForResult(intent, SPEECH_REQUEST);
@@ -48,33 +49,20 @@ public class VoiceInputActivity extends Activity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode,
                                   Intent data) {
+    // When the voice input intent returns and is ok
     if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
+      // Get the text spoken
       List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
       String spokenText = results.get(0);
       android.util.Log.d("VoiceInputActivity", "customization text: " + spokenText);
 
+      // Add the text to the view so the user knows we retrieved it correctly
       Card card = new Card(this);
       card.setText(spokenText);
       View cardView = card.toView();
       setContentView(cardView);
     }
-    
+
     super.onActivityResult(requestCode, resultCode, data);
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
   }
 }
