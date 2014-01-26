@@ -17,29 +17,79 @@
 package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.TextView;
+
+import com.google.android.glass.media.Sounds;
+import com.mobilevangelist.glass.helloworld.R;
 
 /**
  * Main activity.
  */
 public class DpadInputActivity extends Activity {
+  private TextView _titleTextView;
+  private TextView _statusTextView;
+
+  private int _swipeDownCount;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.layout_main);
+
+    _titleTextView = (TextView)findViewById(R.id.title);
+    _titleTextView.setText(R.string.dpad_input);
+    _statusTextView = (TextView)findViewById(R.id.status);
+    _statusTextView.setText(R.string.dpad_instructions);
+
+    _swipeDownCount = 0;
+  }
+  /**
+   * Handle the tap event from the touchpad.
+   */
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+    switch (keyCode) {
+      // Handle tap events.
+      case KeyEvent.KEYCODE_DPAD_CENTER:
+      case KeyEvent.KEYCODE_ENTER:
+
+        // Status message below the main text in the alternative UX layout
+        audio.playSoundEffect(Sounds.TAP);
+
+        _titleTextView.setText(R.string.tap);
+        _statusTextView.setText(R.string.empty_string);
+        _swipeDownCount = 0;
+
+        return true;
+      case KeyEvent.KEYCODE_CAMERA:
+
+        _titleTextView.setText(R.string.camera_button);
+        _statusTextView.setText(R.string.empty_string);
+        _swipeDownCount = 0;
+
+        return true;
+      case KeyEvent.KEYCODE_BACK:
+
+        // Status message below the main text in the alternative UX layout
+        audio.playSoundEffect(Sounds.DISMISSED);
+
+        _titleTextView.setText(R.string.swipe_down);
+        _statusTextView.setText(R.string.swipe_to_go_back);
+        _swipeDownCount++;
+
+        if (_swipeDownCount < 2) {
+          return true;
+        }
+        // Else do the back action
+      default:
+        return super.onKeyDown(keyCode, event);
+    }
   }
 
-  @Override
-  public void onResume() {
-    super.onResume();
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-  }
 }

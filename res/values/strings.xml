@@ -4,6 +4,8 @@
     <string name="tap_for_menu">Tap to see menu</string>
     <string name="footnote">This is a card footnote.</string>
 
+    <string name="empty_string"></string>
+
     <string name="camera">Camera</string>
     <string name="voice_input">Voice Input</string>
     <string name="dpad_input">D-Pad input</string>
@@ -15,6 +17,11 @@
     <string name="gravity">Gravity sensor</string>
     <string name="gyroscope">Gyroscope sensor</string>
     <string name="rotation">Rotation sensor</string>
+    <string name="dpad_instructions">Tap, click camera button, or swipe down</string>
+    <string name="tap">Tap</string>
+    <string name="camera_button">Camera button clicked</string>
+    <string name="swipe_down">Swipe down</string>
+    <string name="swipe_to_go_back">Swipe down again to go back</string>
 
     <string name="glass_voice_trigger">kitchen sink</string>
 </resources>

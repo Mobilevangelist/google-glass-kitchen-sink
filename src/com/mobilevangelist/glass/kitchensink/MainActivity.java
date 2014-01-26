@@ -80,6 +80,9 @@ public class MainActivity extends Activity {
         return true;
       }
       case R.id.dpadInputMenuItem: {
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.DPAD_INPUT");
+        startActivity(intent);
+
         return true;
       }
       case R.id.gestureInputMenuItem: {
