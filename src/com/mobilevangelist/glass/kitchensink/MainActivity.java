@@ -85,6 +85,9 @@ public class MainActivity extends Activity {
         return true;
       }
       case R.id.gestureInputMenuItem: {
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.GESTURE_INPUT");
+        startActivity(intent);
+
         return true;
       }
       case R.id.textToSpeechMenuItem: {
