@@ -24,7 +24,6 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.google.android.glass.media.Sounds;
-import com.mobilevangelist.glass.helloworld.R;
 
 /**
  * Main activity.
@@ -48,6 +47,7 @@ public class DpadInputActivity extends Activity {
 
     _swipeDownCount = 0;
   }
+
   /**
    * Handle the tap event from the touchpad.
    */
@@ -91,5 +91,4 @@ public class DpadInputActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
   }
-
 }

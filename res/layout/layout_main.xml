@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="-12px"
             android:text="@string/app_name"
-            android:textSize="80px"
+            android:textSize="75px"
             android:textStyle="normal"
             android:typeface="sans" />
     </LinearLayout>

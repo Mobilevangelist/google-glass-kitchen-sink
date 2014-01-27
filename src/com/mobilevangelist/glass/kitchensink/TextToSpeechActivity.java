@@ -17,30 +17,58 @@
 package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.view.KeyEvent;
+import android.widget.TextView;
+
+import com.google.android.glass.media.Sounds;
 
 /**
  * Main activity.
  */
 public class TextToSpeechActivity extends Activity {
+  private TextToSpeech _speech;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    setContentView(R.layout.layout_main);
+
+    TextView titleTextView = (TextView)findViewById(R.id.title);
+    titleTextView.setText(R.string.gettysburg_address);
+
+    TextView instructionsTextView = (TextView)findViewById(R.id.status);
+    instructionsTextView.setText(R.string.tap_to_read);
+  }
+  /**
+   * Handle the tap event from the touchpad.
+   */
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+    switch (keyCode) {
+      // Handle tap events.
+      case KeyEvent.KEYCODE_DPAD_CENTER:
+      case KeyEvent.KEYCODE_ENTER:
+
+        // Status message below the main text in the alternative UX layout
+        audio.playSoundEffect(Sounds.TAP);
+
+        _speech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+          @Override
+          public void onInit(int status) {
+            _speech.speak(getResources().getString(R.string.gettysburg_address), TextToSpeech.QUEUE_FLUSH, null);
+          }
+        });
+
+        return true;
+      default:
+        return super.onKeyDown(keyCode, event);
+    }
   }
 
-  @Override
-  public void onResume() {
-    super.onResume();
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-  }
 }

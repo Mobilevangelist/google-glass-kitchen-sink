@@ -6,6 +6,7 @@
 
     <string name="empty_string"></string>
 
+    <!-- Menu items -->
     <string name="camera">Camera</string>
     <string name="voice_input">Voice Input</string>
     <string name="dpad_input">D-Pad input</string>
@@ -17,11 +18,17 @@
     <string name="gravity">Gravity sensor</string>
     <string name="gyroscope">Gyroscope sensor</string>
     <string name="rotation">Rotation sensor</string>
+
+    <!-- DPad -->
     <string name="dpad_instructions">Tap, click camera button, or swipe down</string>
     <string name="tap">Tap</string>
     <string name="camera_button">Camera button clicked</string>
     <string name="swipe_down">Swipe down</string>
     <string name="swipe_to_go_back">Swipe down again to go back</string>
+
+    <!-- Text to speech -->
+    <string name="gettysburg_address">Four score and seven years ago...</string>
+    <string name="tap_to_read">Tap to read aloud</string>
 
     <string name="glass_voice_trigger">kitchen sink</string>
 </resources>

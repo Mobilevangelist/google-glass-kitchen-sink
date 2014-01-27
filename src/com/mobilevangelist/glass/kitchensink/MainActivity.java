@@ -27,7 +27,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.glass.media.Sounds;
-import com.mobilevangelist.glass.helloworld.R;
 
 /**
  * Main activity.
@@ -89,6 +88,9 @@ public class MainActivity extends Activity {
         return true;
       }
       case R.id.textToSpeechMenuItem: {
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.TEXT_TO_SPEECH");
+        startActivity(intent);
+
         return true;
       }
       case R.id.accelerometerMenuItem: {
