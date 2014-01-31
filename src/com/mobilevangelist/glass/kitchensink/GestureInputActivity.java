@@ -18,9 +18,9 @@ package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
@@ -45,12 +45,12 @@ public class GestureInputActivity extends Activity {
     _gestureMap.put(Gesture.TWO_LONG_PRESS, R.string.two_long_press);
     _gestureMap.put(Gesture.THREE_LONG_PRESS, R.string.three_long_press);
     _gestureMap.put(Gesture.SWIPE_LEFT, R.string.swipe_left);
-    _gestureMap.put(Gesture.SWIPE_RIGHT, R.string.swipe_right);
-    _gestureMap.put(Gesture.SWIPE_UP, R.string.swipe_up);
-    _gestureMap.put(Gesture.SWIPE_DOWN, R.string.swipe_down);
     _gestureMap.put(Gesture.TWO_SWIPE_LEFT, R.string.two_swipe_left);
+    _gestureMap.put(Gesture.SWIPE_RIGHT, R.string.swipe_right);
     _gestureMap.put(Gesture.TWO_SWIPE_RIGHT, R.string.two_swipe_right);
+    _gestureMap.put(Gesture.SWIPE_UP, R.string.swipe_up);
     _gestureMap.put(Gesture.TWO_SWIPE_UP, R.string.two_swipe_up);
+    _gestureMap.put(Gesture.SWIPE_DOWN, R.string.swipe_down);
     _gestureMap.put(Gesture.TWO_SWIPE_DOWN, R.string.two_swipe_down);
   }
 
@@ -78,18 +78,20 @@ public class GestureInputActivity extends Activity {
   */
   @Override
   public boolean onGenericMotionEvent(MotionEvent event) {
-    if (_gestureDetector != null) {
+    if (null != _gestureDetector) {
       return _gestureDetector.onMotionEvent(event);
     }
+
     return false;
   }
 
   private class GestureListener implements GestureDetector.BaseListener {
     @Override
     public boolean onGesture(Gesture gesture) {
-      android.util.Log.d("GestureInputActivity", "BaseListener called");
+      Log.d("GestureInputActivity", "BaseListener called");
+      Log.d("GestureInputActivity", getResources().getString(_gestureMap.get(gesture)));
 
-      android.util.Log.d("GestureInputActivity", getResources().getString(_gestureMap.get(gesture)));
+      // NOTE: SWIPE_DOWN events do not seem to register in this listener - could be a bug in the GDK
 
       // Show the gesture in the Glass interface
       _titleTextView.setText(_gestureMap.get(gesture));
@@ -102,14 +104,14 @@ public class GestureInputActivity extends Activity {
   private class FingerGestureListener implements GestureDetector.FingerListener {
     @Override
     public void onFingerCountChanged(int i, int i2) {
-      android.util.Log.d("GestureInputActivity", "FingerListener called: i: " + i + ", i2: " + i2);
+      Log.d("GestureInputActivity", "FingerListener called: i: " + i + ", i2: " + i2);
     }
   }
 
   private class TwoFingerGestureListener implements GestureDetector.TwoFingerScrollListener {
     @Override
     public boolean onTwoFingerScroll(float v, float v2, float v3) {
-      android.util.Log.d("GestureInputActivity", "TwoFingerScrollListener called: v: " + v + ", v2: " + v2 + ", v3: " + v3);
+      Log.d("GestureInputActivity", "TwoFingerScrollListener called: v: " + v + ", v2: " + v2 + ", v3: " + v3);
       return false;
     }
   }
@@ -117,7 +119,7 @@ public class GestureInputActivity extends Activity {
   private class ScrollListener implements GestureDetector.ScrollListener {
     @Override
     public boolean onScroll(float v, float v2, float v3) {
-      android.util.Log.d("GestureInputActivity", "ScrollListener called: v: " + v + ", v2: " + v2 + ", v3: " + v3);
+      Log.d("GestureInputActivity", "ScrollListener called: v: " + v + ", v2: " + v2 + ", v3: " + v3);
       return false;
     }
   }
