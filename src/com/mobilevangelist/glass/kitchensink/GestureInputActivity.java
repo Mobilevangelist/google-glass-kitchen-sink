@@ -25,11 +25,34 @@ import android.widget.TextView;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 
+import java.util.HashMap;
+
 /**
  * Main activity.
  */
 public class GestureInputActivity extends Activity {
   private GestureDetector _gestureDetector;
+
+  private TextView _titleTextView;
+  private TextView _instructionsTextView;
+
+  private static HashMap<Gesture, Integer> _gestureMap = new HashMap<Gesture, Integer>();
+  static {
+    _gestureMap.put(Gesture.TAP, R.string.tap);
+    _gestureMap.put(Gesture.TWO_TAP, R.string.two_tap);
+    _gestureMap.put(Gesture.THREE_TAP, R.string.three_tap);
+    _gestureMap.put(Gesture.LONG_PRESS, R.string.long_press);
+    _gestureMap.put(Gesture.TWO_LONG_PRESS, R.string.two_long_press);
+    _gestureMap.put(Gesture.THREE_LONG_PRESS, R.string.three_long_press);
+    _gestureMap.put(Gesture.SWIPE_LEFT, R.string.swipe_left);
+    _gestureMap.put(Gesture.SWIPE_RIGHT, R.string.swipe_right);
+    _gestureMap.put(Gesture.SWIPE_UP, R.string.swipe_up);
+    _gestureMap.put(Gesture.SWIPE_DOWN, R.string.swipe_down);
+    _gestureMap.put(Gesture.TWO_SWIPE_LEFT, R.string.two_swipe_left);
+    _gestureMap.put(Gesture.TWO_SWIPE_RIGHT, R.string.two_swipe_right);
+    _gestureMap.put(Gesture.TWO_SWIPE_UP, R.string.two_swipe_up);
+    _gestureMap.put(Gesture.TWO_SWIPE_DOWN, R.string.two_swipe_down);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +60,11 @@ public class GestureInputActivity extends Activity {
 
     setContentView(R.layout.layout_main);
 
-    TextView titleTextView = (TextView)findViewById(R.id.title);
-    titleTextView.setText(R.string.gesture_input);
+    _titleTextView = (TextView)findViewById(R.id.title);
+    _titleTextView.setText(R.string.gesture_input);
 
-    TextView instructionsTextView = (TextView)findViewById(R.id.status);
-    instructionsTextView.setText(R.string.gesture_instructions);
+    _instructionsTextView = (TextView)findViewById(R.id.status);
+    _instructionsTextView.setText(R.string.gesture_instructions);
 
     _gestureDetector = new GestureDetector(this);
     _gestureDetector.setBaseListener(new GestureListener());
@@ -65,66 +88,14 @@ public class GestureInputActivity extends Activity {
     @Override
     public boolean onGesture(Gesture gesture) {
       android.util.Log.d("GestureInputActivity", "BaseListener called");
-      if (Gesture.TAP == gesture) {
-        android.util.Log.d("GestureInputActivity", "TAP");
-        return true;
-      }
-      else if (Gesture.TWO_TAP == gesture) {
-        android.util.Log.d("GestureInputActivity", "TWO_TAP");
-        return true;
-      }
-      else if (Gesture.THREE_TAP == gesture) {
-        android.util.Log.d("GestureInputActivity", "THREE_TAP");
-        return true;
-      }
-      else if (Gesture.LONG_PRESS == gesture) {
-        android.util.Log.d("GestureInputActivity", "LONG_PRESS");
-        return true;
-      }
-      else if (Gesture.TWO_LONG_PRESS == gesture) {
-        android.util.Log.d("GestureInputActivity", "TWO_LONG_PRESS");
-        return true;
-      }
-      else if (Gesture.THREE_LONG_PRESS == gesture) {
-        android.util.Log.d("GestureInputActivity", "THREE_LONG_PRESS");
-        return true;
-      }
-      else if (Gesture.SWIPE_LEFT == gesture) {
-        android.util.Log.d("GestureInputActivity", "SWIPE_LEFT");
-        return true;
-      }
-      else if (Gesture.SWIPE_RIGHT == gesture) {
-        android.util.Log.d("GestureInputActivity", "SWIPE_RIGHT");
-        return true;
-      }
-      else if (Gesture.SWIPE_UP == gesture) {
-        android.util.Log.d("GestureInputActivity", "SWIPE_UP");
-        return true;
-      }
-      else if (Gesture.SWIPE_DOWN == gesture) {
-        android.util.Log.d("GestureInputActivity", "SWIPE_DOWN");
-        return true;
-      }
-      else if (Gesture.TWO_SWIPE_LEFT == gesture) {
-        android.util.Log.d("GestureInputActivity", "TWO_SWIPE_LEFT");
-        return true;
-      }
-      else if (Gesture.TWO_SWIPE_RIGHT == gesture) {
-        android.util.Log.d("GestureInputActivity", "TWO_SWIPE_RIGHT");
-        return true;
-      }
-      else if (Gesture.TWO_SWIPE_UP == gesture) {
-        android.util.Log.d("GestureInputActivity", "TWO_SWIPE_UP");
-        return true;
-      }
-      else if (Gesture.TWO_SWIPE_DOWN == gesture) {
-        android.util.Log.d("GestureInputActivity", "TWO_SWIPE_DOWN");
-        return true;
-      }
-      else {
-        android.util.Log.d("GestureInputActivity", "Unknown Gesture");
-      }
-      return false;
+
+      android.util.Log.d("GestureInputActivity", getResources().getString(_gestureMap.get(gesture)));
+
+      // Show the gesture in the Glass interface
+      _titleTextView.setText(_gestureMap.get(gesture));
+      _instructionsTextView.setText(R.string.empty_string);
+
+      return true;
     }
   }
 

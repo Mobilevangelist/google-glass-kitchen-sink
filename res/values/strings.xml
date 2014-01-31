@@ -23,8 +23,20 @@
     <string name="dpad_instructions">Tap, click camera button, or swipe down</string>
     <string name="gesture_instructions">Do a gesture on the touchpad</string>
     <string name="tap">Tap</string>
-    <string name="camera_button">Camera button clicked</string>
+    <string name="two_tap">Two Tap</string>
+    <string name="three_tap">Three Tap</string>
+    <string name="long_press">Long Press</string>
+    <string name="two_long_press">Two Long Press</string>
+    <string name="three_long_press">Three Long Press</string>
+    <string name="swipe_left">Swipe Left</string>
+    <string name="two_swipe_left">Two Swipe Left</string>
+    <string name="swipe_right">Swipe Right</string>
+    <string name="two_swipe_right">Two Swipe Right</string>
+    <string name="swipe_up">Swipe Up</string>
+    <string name="two_swipe_up">Two Swipe Up</string>
     <string name="swipe_down">Swipe down</string>
+    <string name="two_swipe_down">Two Swipe Down</string>
+    <string name="camera_button">Camera button clicked</string>
     <string name="swipe_to_go_back">Swipe down again to go back</string>
 
     <!-- Text to speech -->
