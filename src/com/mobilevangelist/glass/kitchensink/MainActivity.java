@@ -97,6 +97,9 @@ public class MainActivity extends Activity {
         return true;
       }
       case R.id.accelerometerMenuItem: {
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.ACCELEROMETER");
+        startActivity(intent);
+
         return true;
       }
       case R.id.gpsMenuItem: {
