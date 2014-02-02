@@ -43,5 +43,14 @@
     <string name="gettysburg_address">Four score and seven years ago&#8230;</string>
     <string name="tap_to_read">Tap to read aloud</string>
 
+    <!-- Accelerometer display -->
+    <string name="accelerometer_title">Accelerometer Readings</string>
+    <string name="gravity_x">Gravity - X: </string>
+    <string name="gravity_y">Gravity - Y: </string>
+    <string name="gravity_z">Gravity - Z: </string>
+    <string name="linear_acceleration_x">Linear Accel - X: </string>
+    <string name="linear_acceleration_y">Linear Accel - Y: </string>
+    <string name="linear_acceleration_z">Linear Accel - Z: </string>
+
     <string name="glass_voice_trigger">kitchen sink</string>
 </resources>

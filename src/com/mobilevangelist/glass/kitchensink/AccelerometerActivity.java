@@ -23,11 +23,25 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 /**
  * Accelerometer activity.
  */
 public class AccelerometerActivity extends Activity {
+  private final static int X = 0;
+  private final static int Y = 1;
+  private final static int Z = 2;
+
+  private TextView _gravityXTextView;
+  private TextView _gravityYTextView;
+  private TextView _gravityZTextView;
+  private TextView _linearAccelXTextView;
+  private TextView _linearAccelYTextView;
+  private TextView _linearAccelZTextView;
+
   private SensorManager _sensorManager;
   private Sensor _accelerometer;
   private AccelerometerListener _accelerometerListener;
@@ -35,6 +49,14 @@ public class AccelerometerActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.layout_accelerometer);
+    _gravityXTextView = (TextView)findViewById(R.id.gravityXValueTextView);
+    _gravityYTextView = (TextView)findViewById(R.id.gravityYValueTextView);
+    _gravityZTextView = (TextView)findViewById(R.id.gravityZValueTextView);
+    _linearAccelXTextView = (TextView)findViewById(R.id.linearAccelerationXValueTextView);
+    _linearAccelYTextView = (TextView)findViewById(R.id.linearAccelerationYValueTextView);
+    _linearAccelZTextView = (TextView)findViewById(R.id.linearAccelerationZValueTextView);
 
     _sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
     _accelerometer = _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -67,23 +89,32 @@ public class AccelerometerActivity extends Activity {
 
       final double alpha = 0.8;
       double[] gravity = new double[3];
-      double[] linear_acceleration = new double[3];
+      double[] linearAcceleration = new double[3];
 
-      gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
-      gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
-      gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+      gravity[X] = alpha * gravity[X] + (1 - alpha) * event.values[X];
+      gravity[Y] = alpha * gravity[Y] + (1 - alpha) * event.values[Y];
+      gravity[Z] = alpha * gravity[Z] + (1 - alpha) * event.values[Z];
 
-      linear_acceleration[0] = event.values[0] - gravity[0];
-      linear_acceleration[1] = event.values[1] - gravity[1];
-      linear_acceleration[2] = event.values[2] - gravity[2];
+      linearAcceleration[X] = event.values[X] - gravity[X];
+      linearAcceleration[Y] = event.values[Y] - gravity[Y];
+      linearAcceleration[Z] = event.values[Z] - gravity[Z];
 
       Log.d("AccelerometerActivity", "--------------------------");
-      Log.d("AccelerometerActivity", "gravity[0]: " + gravity[0]);
-      Log.d("AccelerometerActivity", "gravity[1]: " + gravity[1]);
-      Log.d("AccelerometerActivity", "gravity[2]: " + gravity[2]);
-      Log.d("AccelerometerActivity", "linear_acceleration[0]: " + linear_acceleration[0]);
-      Log.d("AccelerometerActivity", "linear_acceleration[1]: " + linear_acceleration[1]);
-      Log.d("AccelerometerActivity", "linear_acceleration[2]: " + linear_acceleration[2]);
+      Log.d("AccelerometerActivity", "gravity[X]: " + gravity[X]);
+      Log.d("AccelerometerActivity", "gravity[Y]: " + gravity[Y]);
+      Log.d("AccelerometerActivity", "gravity[Z]: " + gravity[Z]);
+      Log.d("AccelerometerActivity", "linear acceleration[X]: " + linearAcceleration[X]);
+      Log.d("AccelerometerActivity", "linear acceleration[Y]: " + linearAcceleration[Y]);
+      Log.d("AccelerometerActivity", "linear acceleration[Z]: " + linearAcceleration[Z]);
+
+      DecimalFormat df = new DecimalFormat("0.0");
+
+      _gravityXTextView.setText(df.format(gravity[X]));
+      _gravityYTextView.setText(df.format(gravity[Y]));
+      _gravityZTextView.setText(df.format(gravity[Z]));
+      _linearAccelXTextView.setText(df.format(linearAcceleration[X]));
+      _linearAccelYTextView.setText(df.format(linearAcceleration[Y]));
+      _linearAccelZTextView.setText(df.format(linearAcceleration[Z]));
     }
 
     @Override
