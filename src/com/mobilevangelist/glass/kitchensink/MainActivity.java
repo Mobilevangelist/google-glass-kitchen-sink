@@ -103,6 +103,9 @@ public class MainActivity extends Activity {
         return true;
       }
       case R.id.gpsMenuItem: {
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.GPS");
+        startActivity(intent);
+
         return true;
       }
       default: {
