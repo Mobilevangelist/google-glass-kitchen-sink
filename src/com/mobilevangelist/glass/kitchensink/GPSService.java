@@ -18,18 +18,12 @@ package com.mobilevangelist.glass.kitchensink;
 
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.IBinder;
 import android.view.SurfaceHolder;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
-
-import java.util.List;
 
 /**
  * GPS service to read GPS coordinates.
