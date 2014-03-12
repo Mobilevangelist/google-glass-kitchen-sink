@@ -46,8 +46,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   public void surfaceCreated(SurfaceHolder holder) {
     _holder = holder;
 
-    GPSThread gps = new GPSThread(_context, this);
-    gps.start();
+    //GPSThread gps = new GPSThread(_context, this);
+    //gps.start();
   }
 
   @Override
@@ -57,6 +57,9 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
 
     _gpsLayout.measure(measuredWidth, measuredHeight);
     _gpsLayout.layout(0, 0, _gpsLayout.getMeasuredWidth(), _gpsLayout.getMeasuredHeight());
+
+    //_waitingTextView.setVisibility(View.GONE);
+    //_coordinateLayout.setVisibility(View.VISIBLE);
 
     draw();
   }
@@ -75,8 +78,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
     android.util.Log.d("GPSActivity", "location time: " + new Date(locationTime));
     android.util.Log.d("GPSActivity", "");
 
-    //_waitingTextView.setVisibility(View.GONE);
-    //_coordinateLayout.setVisibility(View.VISIBLE);
+    _waitingTextView.setVisibility(View.GONE);
+    _coordinateLayout.setVisibility(View.VISIBLE);
 
     //_longitudeTextView.setText(String.valueOf(location.getLongitude()));
     //_latitudeTextView.setText(String.valueOf(location.getLatitude()));

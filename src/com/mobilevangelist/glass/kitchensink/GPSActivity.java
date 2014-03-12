@@ -19,8 +19,6 @@ package com.mobilevangelist.glass.kitchensink;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 /**
  * GPS activity.
@@ -30,11 +28,7 @@ public class GPSActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.layout_gps);
-    RelativeLayout coordinateLayout = (RelativeLayout)findViewById(R.id.coordinateLayout);
-    coordinateLayout.setVisibility(View.GONE);
-
-    //startService(new Intent(this, GPSService.class));
-    //finish();
+    startService(new Intent(this, GPSService.class));
+    finish();
   }
 }
