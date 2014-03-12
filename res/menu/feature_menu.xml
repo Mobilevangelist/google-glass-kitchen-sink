@@ -22,7 +22,7 @@
           android:title="@string/text_to_speech"
             />
     <item android:id="@+id/accelerometerMenuItem"
-          android:icon="@drawable/ic_camera_50"
+          android:icon="@drawable/ic_help_50"
           android:title="@string/accelerometer"
             />
     <item android:id="@+id/gpsMenuItem"
