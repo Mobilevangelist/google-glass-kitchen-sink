@@ -17,24 +17,53 @@
 package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 /**
- * GPS activity.
+ * GPS Menu activity.
  */
-public class GPSActivity extends Activity {
+public class GPSMenuActivity extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
 
-    setContentView(R.layout.layout_gps);
-    RelativeLayout coordinateLayout = (RelativeLayout)findViewById(R.id.coordinateLayout);
-    coordinateLayout.setVisibility(View.GONE);
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.gps_menu, menu);
 
-    //startService(new Intent(this, GPSService.class));
-    //finish();
+    return true;
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle item selection
+    switch (item.getItemId()) {
+      case R.id.stopMenuItem: {
+        return true;
+      }
+      default: {
+        return super.onOptionsItemSelected(item);
+      }
+    }
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    openOptionsMenu();
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
   }
 }

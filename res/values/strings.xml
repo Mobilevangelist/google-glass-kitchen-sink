@@ -52,5 +52,12 @@
     <string name="linear_acceleration_y">Linear Accel - Y: </string>
     <string name="linear_acceleration_z">Linear Accel - Z: </string>
 
+    <!-- GPS display -->
+    <string name="gps_title">GPS</string>
+    <string name="waiting_for_location">Waiting for location&#8230;</string>
+    <string name="longitude">Longitude: </string>
+    <string name="latitude">Latitude: </string>
+    <string name="stop">Stop</string>
+
     <string name="glass_voice_trigger">kitchen sink</string>
 </resources>

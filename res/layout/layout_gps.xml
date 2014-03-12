@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/gpsLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/gps_title"
+            android:id="@+id/textView" android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/waiting_for_location"
+            android:id="@+id/waitingTextView" android:layout_centerInParent="true"/>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_margin="80dp"
+            android:id="@+id/coordinateLayout">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/longitude"
+                android:id="@+id/longitudeLabelTextView" android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/longitudeTextView" android:layout_marginLeft="20dp"
+                android:layout_alignTop="@+id/longitudeLabelTextView"
+                android:layout_toRightOf="@+id/longitudeLabelTextView"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/latitude"
+                android:id="@+id/latitudeLabelTextView"
+                android:layout_alignLeft="@+id/longitudeLabelTextView"
+                android:layout_below="@+id/longitudeLabelTextView" android:layout_marginTop="20dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/latitudeTextView" android:layout_alignTop="@+id/latitudeLabelTextView"
+                android:layout_alignLeft="@+id/longitudeTextView"/>
+    </RelativeLayout>
+</RelativeLayout>

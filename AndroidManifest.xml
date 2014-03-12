@@ -67,6 +67,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.mobilevangelist.glass.kitchensink.GPSMenuActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="com.mobilevangelist.glass.kitchensink.GPS_MENU" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service
+                android:name=".GPSService"
+                android:label="@string/app_name"
+                android:enabled="true">
+        </service>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
