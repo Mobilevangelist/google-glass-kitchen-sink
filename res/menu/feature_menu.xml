@@ -10,11 +10,11 @@
           android:title="@string/voice_input"
             />
     <item android:id="@+id/dpadInputMenuItem"
-          android:icon="@drawable/ic_camera_50"
+          android:icon="@drawable/ic_gear_50"
           android:title="@string/dpad_input"
             />
     <item android:id="@+id/gestureInputMenuItem"
-          android:icon="@drawable/ic_camera_50"
+          android:icon="@drawable/ic_gear_50"
           android:title="@string/gesture_input"
             />
     <item android:id="@+id/textToSpeechMenuItem"
