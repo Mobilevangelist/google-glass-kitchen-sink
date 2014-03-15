@@ -28,7 +28,7 @@ import java.util.List;
  * GPS service to read GPS coordinates.
  */
 public class GPSThread extends Thread {
-  private final static long MIN_TIME = 1000;  // 1 sec
+  private final static long MIN_TIME = 500;  // 1/2 sec
   private final static long MIN_DISTANCE = 1; // 1 meter
 
   private LocationListener _listener;
@@ -62,5 +62,9 @@ public class GPSThread extends Thread {
       android.util.Log.d("GPSThread", "Calling requestLocationUpdates from " + provider);
       _locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, _listener);
     }
+  }
+
+  public void haltUpdates() {
+    _locationManager.removeUpdates(_listener);
   }
 }

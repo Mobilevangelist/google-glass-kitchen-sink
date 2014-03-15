@@ -23,6 +23,7 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   private RelativeLayout _gpsLayout;
   private TextView _longitudeTextView;
   private TextView _latitudeTextView;
+  private GPSThread _gps;
 
   private Context _context;
 
@@ -40,8 +41,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   public void surfaceCreated(SurfaceHolder holder) {
     _holder = holder;
 
-    //GPSThread gps = new GPSThread(_context, this);
-    //gps.start();
+    _gps = new GPSThread(_context, this);
+    _gps.start();
   }
 
   @Override
@@ -57,7 +58,7 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
 
   @Override
   public void surfaceDestroyed(SurfaceHolder holder) {
-
+    _gps.haltUpdates();
   }
 
   @Override
