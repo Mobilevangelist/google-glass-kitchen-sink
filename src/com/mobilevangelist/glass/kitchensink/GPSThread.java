@@ -20,6 +20,7 @@ import android.content.Context;
 import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Looper;
 
 import java.util.List;
 
@@ -42,19 +43,12 @@ public class GPSThread extends Thread {
 
   @Override
   public void run() {
-    while (true) {
+    Looper.prepare();
       getUpdate();
-
-      try {
-        Thread.sleep(1000);
-      }
-      catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
+    Looper.loop();
   }
 
-  private void init(Context context) {
+  public void init(Context context) {
     _locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
     Criteria criteria = new Criteria();
@@ -63,7 +57,7 @@ public class GPSThread extends Thread {
     _providers = _locationManager.getProviders(criteria, true);
   }
 
-  private void getUpdate() {
+  public void getUpdate() {
     for (String provider : _providers) {
       android.util.Log.d("GPSThread", "Calling requestLocationUpdates from " + provider);
       _locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, _listener);
