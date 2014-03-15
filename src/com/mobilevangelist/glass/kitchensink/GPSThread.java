@@ -48,7 +48,7 @@ public class GPSThread extends Thread {
     Looper.loop();
   }
 
-  public void init(Context context) {
+  private void init(Context context) {
     _locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
     Criteria criteria = new Criteria();
@@ -57,7 +57,7 @@ public class GPSThread extends Thread {
     _providers = _locationManager.getProviders(criteria, true);
   }
 
-  public void getUpdates() {
+  private void getUpdates() {
     for (String provider : _providers) {
       android.util.Log.d("GPSThread", "Calling requestLocationUpdates from " + provider);
       _locationManager.requestLocationUpdates(provider, MIN_TIME, MIN_DISTANCE, _listener);
