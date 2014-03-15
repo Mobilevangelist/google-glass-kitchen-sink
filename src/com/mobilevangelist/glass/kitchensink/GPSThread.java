@@ -65,6 +65,7 @@ public class GPSThread extends Thread {
   }
 
   public void haltUpdates() {
+    android.util.Log.d("GPSThread", "Halting requestLocationUpdates.");
     _locationManager.removeUpdates(_listener);
   }
 }
