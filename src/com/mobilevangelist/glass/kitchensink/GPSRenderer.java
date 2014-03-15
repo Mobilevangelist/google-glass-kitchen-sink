@@ -21,6 +21,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   private SurfaceHolder _holder;
 
   private RelativeLayout _gpsLayout;
+  private TextView _waitingTextView;
+  private RelativeLayout _coordinateLayout;
   private TextView _longitudeTextView;
   private TextView _latitudeTextView;
   private GPSThread _gps;
@@ -30,6 +32,10 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   public GPSRenderer(Context context) {
     LayoutInflater inflater = LayoutInflater.from(context);
     _gpsLayout = (RelativeLayout) inflater.inflate(R.layout.layout_gps, null);
+
+    _waitingTextView = (TextView) _gpsLayout.findViewById(R.id.waitingTextView);
+    _coordinateLayout = (RelativeLayout) _gpsLayout.findViewById(R.id.coordinateLayout);
+    _coordinateLayout.setVisibility(View.INVISIBLE);
 
     _longitudeTextView = (TextView) _gpsLayout.findViewById(R.id.longitudeTextView);
     _latitudeTextView = (TextView) _gpsLayout.findViewById(R.id.latitudeTextView);
@@ -69,6 +75,9 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
     android.util.Log.d("GPSActivity", "location.longitude: " + location.getLongitude());
     android.util.Log.d("GPSActivity", "location time: " + new Date(locationTime));
     android.util.Log.d("GPSActivity", "");
+
+    _waitingTextView.setVisibility(View.INVISIBLE);
+    _coordinateLayout.setVisibility(View.VISIBLE);
 
     _longitudeTextView.setText(String.valueOf(location.getLongitude()));
     _latitudeTextView.setText(String.valueOf(location.getLatitude()));
