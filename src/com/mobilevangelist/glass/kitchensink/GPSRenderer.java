@@ -23,8 +23,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   private RelativeLayout _gpsLayout;
   private TextView _waitingTextView;
   private RelativeLayout _coordinateLayout;
-  private TextView _longitudeTextView;
   private TextView _latitudeTextView;
+  private TextView _longitudeTextView;
   private GPSThread _gps;
 
   private Context _context;
@@ -39,8 +39,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
     _coordinateLayout = (RelativeLayout) _gpsLayout.findViewById(R.id.coordinateLayout);
     _coordinateLayout.setVisibility(View.INVISIBLE);
 
-    _longitudeTextView = (TextView) _gpsLayout.findViewById(R.id.longitudeTextView);
     _latitudeTextView = (TextView) _gpsLayout.findViewById(R.id.latitudeTextView);
+    _longitudeTextView = (TextView) _gpsLayout.findViewById(R.id.longitudeTextView);
 
     _context = context;
   }
@@ -85,8 +85,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
     _waitingTextView.setVisibility(View.INVISIBLE);
     _coordinateLayout.setVisibility(View.VISIBLE);
 
-    _longitudeTextView.setText(String.valueOf(location.getLongitude()));
     _latitudeTextView.setText(String.valueOf(location.getLatitude()));
+    _longitudeTextView.setText(String.valueOf(location.getLongitude()));
 
     draw();
   }
