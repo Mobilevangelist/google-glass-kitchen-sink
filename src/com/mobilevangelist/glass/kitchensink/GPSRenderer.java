@@ -30,6 +30,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   private Context _context;
 
   public GPSRenderer(Context context) {
+    android.util.Log.d("GPSRenderer", "In GPSRenderer constructor()");
+
     LayoutInflater inflater = LayoutInflater.from(context);
     _gpsLayout = (RelativeLayout) inflater.inflate(R.layout.layout_gps, null);
 
@@ -45,6 +47,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
 
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
+    android.util.Log.d("GPSRenderer", "In surfaceCreated()");
+
     _holder = holder;
 
     _gps = new GPSThread(_context, this);
@@ -53,6 +57,8 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
 
   @Override
   public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    android.util.Log.d("GPSRenderer", "In surfaceChanged()");
+
     int measuredWidth = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
     int measuredHeight = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
 
@@ -70,11 +76,11 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   @Override
   public void onLocationChanged(Location location) {
     long locationTime = location.getTime();
-    android.util.Log.d("GPSActivity", "location provider: " + location.getProvider());
-    android.util.Log.d("GPSActivity", "location.latitude: " + location.getLatitude());
-    android.util.Log.d("GPSActivity", "location.longitude: " + location.getLongitude());
-    android.util.Log.d("GPSActivity", "location time: " + new Date(locationTime));
-    android.util.Log.d("GPSActivity", "");
+    android.util.Log.d("GPSRenderer", "location provider: " + location.getProvider());
+    android.util.Log.d("GPSRenderer", "location.latitude: " + location.getLatitude());
+    android.util.Log.d("GPSRenderer", "location.longitude: " + location.getLongitude());
+    android.util.Log.d("GPSRenderer", "location time: " + new Date(locationTime));
+    android.util.Log.d("GPSRenderer", "");
 
     _waitingTextView.setVisibility(View.INVISIBLE);
     _coordinateLayout.setVisibility(View.VISIBLE);

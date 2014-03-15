@@ -45,6 +45,8 @@ public class GPSService extends Service {
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
+    android.util.Log.d("GPSService", "In onStartCommand()");
+
     if (_liveCard == null) {
       _liveCard = _timelineManager.createLiveCard("KitchenSinkGPS");
       _renderer = new GPSRenderer(this);
@@ -66,6 +68,8 @@ public class GPSService extends Service {
 
   @Override
   public void onDestroy() {
+    android.util.Log.d("GPSService", "GPSService destroyed");
+
     if ((null != _liveCard) && (_liveCard.isPublished())) {
       _liveCard.unpublish();
       _liveCard.getSurfaceHolder().removeCallback(_renderer);
