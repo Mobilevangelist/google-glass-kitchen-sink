@@ -36,6 +36,7 @@ public class GPSService extends Service {
   @Override
   public void onCreate() {
     _timelineManager = TimelineManager.from(this);
+    _renderer = new GPSRenderer(this);
   }
 
   @Override
@@ -49,7 +50,6 @@ public class GPSService extends Service {
 
     if (_liveCard == null) {
       _liveCard = _timelineManager.createLiveCard("KitchenSinkGPS");
-      _renderer = new GPSRenderer(this);
 
       _liveCard.setDirectRenderingEnabled(true);
       _liveCard.getSurfaceHolder().addCallback(_renderer);
