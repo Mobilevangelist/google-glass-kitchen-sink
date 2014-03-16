@@ -69,6 +69,10 @@ public class MainActivity extends Activity {
     // Handle item selection
     switch (item.getItemId()) {
       case R.id.cameraMenuItem: {
+        // Open camera preview
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.CAMERA");
+        startActivity(intent);
+
         return true;
       }
       case R.id.voiceInputMenuItem: {
