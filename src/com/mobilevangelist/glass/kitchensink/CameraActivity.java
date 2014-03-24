@@ -17,6 +17,8 @@
 package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -43,6 +45,27 @@ public class CameraActivity extends Activity {
     SurfaceView surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
     _surfaceHolder = surfaceView.getHolder();
     _surfaceHolder.addCallback(new SurfaceHolderCallback());
+  }
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    switch (keyCode) {
+      // Handle tap events.
+      case KeyEvent.KEYCODE_CAMERA:
+        android.util.Log.d("CameraActivity", "Camera button pressed.");
+        _camera.takePicture(null, null, new SavePicture());
+        android.util.Log.d("CameraActivity", "Picture taken.");
+
+        return true;
+      case KeyEvent.KEYCODE_DPAD_CENTER:
+      case KeyEvent.KEYCODE_ENTER:
+        android.util.Log.d("CameraActivity", "Tap.");
+        _camera.takePicture(null, null, new SavePicture());
+
+        return true;
+      default:
+        return super.onKeyDown(keyCode, event);
+    }
   }
 
   class SurfaceHolderCallback implements SurfaceHolder.Callback {
@@ -77,8 +100,18 @@ public class CameraActivity extends Activity {
       // Stop the preview and release the camera
       _camera.stopPreview();
       _camera.release();
+      android.util.Log.d("CameraActivity", "surfaceDestroyed.");
+    }
+  }
 
-      _camera = null;
+  class SavePicture implements Camera.PictureCallback {
+    @Override
+    public void onPictureTaken(byte[] bytes, Camera camera) {
+      android.util.Log.d("CameraActivity", "In onPictureTaken().");
+      Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+      // Save the image rotated counter-clockwise 90 degrees
+      //ImageUtil.savePicture(ImageUtil.rotateImage(image, -90), FrameImage.NO_FRAME_FILENAME);
     }
   }
 }
