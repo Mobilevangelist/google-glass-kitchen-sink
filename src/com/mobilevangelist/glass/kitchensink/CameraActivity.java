@@ -23,8 +23,12 @@ import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.google.android.glass.touchpad.Gesture;
+import com.google.android.glass.touchpad.GestureDetector;
 
 import java.io.IOException;
 
@@ -34,6 +38,8 @@ import java.io.IOException;
 public class CameraActivity extends Activity {
   private SurfaceHolder _surfaceHolder;
   private Camera _camera;
+
+  private GestureDetector _gestureDetector;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,8 @@ public class CameraActivity extends Activity {
     SurfaceView surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
     _surfaceHolder = surfaceView.getHolder();
     _surfaceHolder.addCallback(new SurfaceHolderCallback());
+
+    _gestureDetector = new GestureDetector(this).setBaseListener(new GestureListener());
   }
 
   @Override
@@ -57,14 +65,32 @@ public class CameraActivity extends Activity {
         android.util.Log.d("CameraActivity", "Picture taken.");
 
         return true;
-      case KeyEvent.KEYCODE_DPAD_CENTER:
+      /*case KeyEvent.KEYCODE_DPAD_CENTER:
       case KeyEvent.KEYCODE_ENTER:
         android.util.Log.d("CameraActivity", "Tap.");
         _camera.takePicture(null, null, new SavePicture());
 
-        return true;
+        return true;*/
       default:
         return super.onKeyDown(keyCode, event);
+    }
+  }
+
+  @Override
+  public boolean onGenericMotionEvent(MotionEvent event) {
+    return _gestureDetector.onMotionEvent(event);
+  }
+
+  class GestureListener implements GestureDetector.BaseListener {
+    @Override
+    public boolean onGesture(Gesture gesture) {
+      if (gesture == Gesture.TAP) {
+        android.util.Log.d("CameraActivity", "Gesture Tap");
+
+        _camera.takePicture(null, null, new SavePicture());
+        return true;
+      }
+      return false;
     }
   }
 
