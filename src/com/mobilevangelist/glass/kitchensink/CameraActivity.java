@@ -168,6 +168,14 @@ public class CameraActivity extends Activity {
         // Save the image
         String imageFilename = savePicture(image);
 
+        Uri uri = Uri.fromFile(new File(imageFilename));
+        android.util.Log.d("CameraActivity", "imageFilename: " + imageFilename);
+        android.util.Log.d("CameraActivity", "uri: " + uri);
+        Card photoCard = new Card(_context);
+        photoCard.setImageLayout(Card.ImageLayout.FULL);
+        photoCard.addImage(uri);
+        android.util.Log.d("CameraActivity", "Inserting into timeline.");
+        TimelineManager.from(_context).insert(photoCard);
       }
       catch (IOException e) {
         e.printStackTrace();
