@@ -17,20 +17,29 @@
 package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.google.android.glass.touchpad.Gesture;
-import com.google.android.glass.touchpad.GestureDetector;
+import com.google.android.glass.app.Card;
+import com.google.android.glass.media.Sounds;
+import com.google.android.glass.timeline.TimelineManager;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Camera preview
@@ -39,7 +48,7 @@ public class CameraActivity extends Activity {
   private SurfaceHolder _surfaceHolder;
   private Camera _camera;
 
-  private GestureDetector _gestureDetector;
+  Context _context = this;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -51,46 +60,66 @@ public class CameraActivity extends Activity {
     SurfaceView surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
     _surfaceHolder = surfaceView.getHolder();
     _surfaceHolder.addCallback(new SurfaceHolderCallback());
-
-    _gestureDetector = new GestureDetector(this).setBaseListener(new GestureListener());
   }
 
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
+    AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     switch (keyCode) {
       // Handle tap events.
       case KeyEvent.KEYCODE_CAMERA:
         android.util.Log.d("CameraActivity", "Camera button pressed.");
+
+        audio.playSoundEffect(Sounds.TAP);
+
         _camera.takePicture(null, null, new SavePicture());
         android.util.Log.d("CameraActivity", "Picture taken.");
 
         return true;
-      /*case KeyEvent.KEYCODE_DPAD_CENTER:
+      case KeyEvent.KEYCODE_DPAD_CENTER:
       case KeyEvent.KEYCODE_ENTER:
         android.util.Log.d("CameraActivity", "Tap.");
+
+        audio.playSoundEffect(Sounds.SUCCESS);
+
         _camera.takePicture(null, null, new SavePicture());
 
-        return true;*/
+        return true;
       default:
         return super.onKeyDown(keyCode, event);
     }
   }
 
-  @Override
-  public boolean onGenericMotionEvent(MotionEvent event) {
-    return _gestureDetector.onMotionEvent(event);
-  }
+  public String savePicture(Bitmap image) throws IOException {
+    android.util.Log.d("CameraActivity", "Saving picture...");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
+    String imageFilename = sdf.format(new Date()) + ".jpg";
+    String imageFullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + File.separator + "Camera" + File.separator + imageFilename;
+    //android.util.Log.d("CameraActivity", "external dcim dir: " + Environment.getExternalStoragePublicDirectory(Environment.));
 
-  class GestureListener implements GestureDetector.BaseListener {
-    @Override
-    public boolean onGesture(Gesture gesture) {
-      if (gesture == Gesture.TAP) {
-        android.util.Log.d("CameraActivity", "Gesture Tap");
+    FileOutputStream fos = null;
+    try {
+      fos = new FileOutputStream(imageFullPath);
 
-        _camera.takePicture(null, null, new SavePicture());
-        return true;
+      image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
+      android.util.Log.d("CameraActivity", "Picture saved.");
+      return imageFullPath;
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+
+      throw(e);
+    }
+    finally {
+      if (null != fos) {
+        try {
+          fos.close();
+        }
+        catch (IOException e) {
+          e.printStackTrace();
+        }
       }
-      return false;
     }
   }
 
@@ -135,8 +164,14 @@ public class CameraActivity extends Activity {
       android.util.Log.d("CameraActivity", "In onPictureTaken().");
       Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-      // Save the image rotated counter-clockwise 90 degrees
-      //ImageUtil.savePicture(ImageUtil.rotateImage(image, -90), FrameImage.NO_FRAME_FILENAME);
+      try {
+        // Save the image
+        String imageFilename = savePicture(image);
+
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 }
