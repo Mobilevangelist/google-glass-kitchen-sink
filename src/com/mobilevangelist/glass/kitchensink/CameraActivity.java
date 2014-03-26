@@ -108,7 +108,6 @@ public class CameraActivity extends Activity {
           // Start the preview
           _camera.setPreviewDisplay(_surfaceHolder);
           _camera.startPreview();
-          _camera.autoFocus(null);
         }
         catch (IOException e) {
           e.printStackTrace();
