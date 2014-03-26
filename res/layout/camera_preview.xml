@@ -4,7 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <SurfaceView
+    <com.mobilevangelist.glass.kitchensink.CameraPreview
             android:id="@+id/camerapreview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

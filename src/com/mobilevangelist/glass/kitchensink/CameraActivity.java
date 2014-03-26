@@ -36,7 +36,7 @@ import java.io.IOException;
  * Camera preview
  */
 public class CameraActivity extends Activity {
-  private SurfaceHolder _surfaceHolder;
+  private CameraPreview _cameraPreview;
   private Camera _camera;
 
   private GestureDetector _gestureDetector;
@@ -45,14 +45,12 @@ public class CameraActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.camera_preview);
+    //setContentView(R.layout.camera_preview);
 
-    getWindow().setFormat(PixelFormat.UNKNOWN);
-    SurfaceView surfaceView = (SurfaceView) findViewById(R.id.camerapreview);
-    _surfaceHolder = surfaceView.getHolder();
-    _surfaceHolder.addCallback(new SurfaceHolderCallback());
+    //_cameraPreview = (CameraPreview) findViewById(R.id.camerapreview);
 
-    _gestureDetector = new GestureDetector(this).setBaseListener(new GestureListener());
+    _cameraPreview = new CameraPreview(this);
+    setContentView(_cameraPreview);
   }
 
   @Override
@@ -61,72 +59,18 @@ public class CameraActivity extends Activity {
       // Handle tap events.
       case KeyEvent.KEYCODE_CAMERA:
         android.util.Log.d("CameraActivity", "Camera button pressed.");
-        _camera.takePicture(null, null, new SavePicture());
+        _cameraPreview.getCamera().takePicture(null, null, new SavePicture());
         android.util.Log.d("CameraActivity", "Picture taken.");
 
         return true;
-      /*case KeyEvent.KEYCODE_DPAD_CENTER:
+      case KeyEvent.KEYCODE_DPAD_CENTER:
       case KeyEvent.KEYCODE_ENTER:
         android.util.Log.d("CameraActivity", "Tap.");
-        _camera.takePicture(null, null, new SavePicture());
+        _cameraPreview.getCamera().takePicture(null, null, new SavePicture());
 
-        return true;*/
+        return true;
       default:
         return super.onKeyDown(keyCode, event);
-    }
-  }
-
-  @Override
-  public boolean onGenericMotionEvent(MotionEvent event) {
-    return _gestureDetector.onMotionEvent(event);
-  }
-
-  class GestureListener implements GestureDetector.BaseListener {
-    @Override
-    public boolean onGesture(Gesture gesture) {
-      if (gesture == Gesture.TAP) {
-        android.util.Log.d("CameraActivity", "Gesture Tap");
-
-        _camera.takePicture(null, null, new SavePicture());
-        return true;
-      }
-      return false;
-    }
-  }
-
-  class SurfaceHolderCallback implements SurfaceHolder.Callback {
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-      if (null != _camera) {
-
-        try {
-          // This camera parameter is set to fix a bug in XE12 that garbles the preview
-          Camera.Parameters params = _camera.getParameters();
-          params.setPreviewFpsRange(5000, 5000);
-          _camera.setParameters(params);
-
-          // Start the preview
-          _camera.setPreviewDisplay(_surfaceHolder);
-          _camera.startPreview();
-          _camera.autoFocus(null);
-        }
-        catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-      _camera = Camera.open();
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-      // Stop the preview and release the camera
-      _camera.stopPreview();
-      _camera.release();
-      android.util.Log.d("CameraActivity", "surfaceDestroyed.");
     }
   }
 
