@@ -10,19 +10,19 @@
           android:title="@string/voice_input"
             />
     <item android:id="@+id/dpadInputMenuItem"
-          android:icon="@drawable/ic_gear_50"
+          android:icon="@drawable/ic_dpad_input_50"
           android:title="@string/dpad_input"
             />
     <item android:id="@+id/gestureInputMenuItem"
-          android:icon="@drawable/ic_gear_50"
+          android:icon="@drawable/ic_gesture_input_50"
           android:title="@string/gesture_input"
             />
     <item android:id="@+id/textToSpeechMenuItem"
-          android:icon="@drawable/ic_message_50"
+          android:icon="@drawable/ic_text_to_speech_50"
           android:title="@string/text_to_speech"
             />
     <item android:id="@+id/accelerometerMenuItem"
-          android:icon="@drawable/ic_help_50"
+          android:icon="@drawable/ic_accelerometer_50"
           android:title="@string/accelerometer"
             />
     <item android:id="@+id/gpsMenuItem"
