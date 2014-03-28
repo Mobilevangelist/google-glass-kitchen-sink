@@ -18,20 +18,23 @@ package com.mobilevangelist.glass.kitchensink;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.google.android.glass.app.Card;
+import com.google.android.glass.media.CameraManager;
 import com.google.android.glass.media.Sounds;
 import com.google.android.glass.timeline.TimelineManager;
 
@@ -47,6 +50,7 @@ import java.util.Date;
 public class CameraActivity extends Activity {
   private SurfaceHolder _surfaceHolder;
   private Camera _camera;
+  private boolean _previewOn;
 
   Context _context = this;
 
@@ -64,25 +68,39 @@ public class CameraActivity extends Activity {
 
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
-    AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     switch (keyCode) {
       // Handle tap events.
       case KeyEvent.KEYCODE_CAMERA:
         android.util.Log.d("CameraActivity", "Camera button pressed.");
 
-        audio.playSoundEffect(Sounds.TAP);
+        // Release the camera before the picture is taken
+        _camera.stopPreview();
+        _camera.release();
+        _previewOn = false;
 
-        _camera.takePicture(null, null, new SavePicture());
-        android.util.Log.d("CameraActivity", "Picture taken.");
-
-        return true;
-      case KeyEvent.KEYCODE_DPAD_CENTER:
+        // Return false to allow the camera button to do its default action
+        return false;
+      case KeyEvent.KEYCODE_DPAD_CENTER:  // Alternative way to take a picture
       case KeyEvent.KEYCODE_ENTER:
         android.util.Log.d("CameraActivity", "Tap.");
 
-        audio.playSoundEffect(Sounds.SUCCESS);
+        // Option 1: release the camera and use the ACTION_IMAGE_CAPTURE intent
+        _camera.stopPreview();
+        _camera.release();
+        _previewOn = false;  // Don't release the camera in surfaceDestroyed()
 
-        _camera.takePicture(null, null, new SavePicture());
+        // Use the image capture intent to take the picture and process it with onActivityResult()
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
+
+        // Option 2: capture the picture yourself and process it with a Camera.PictureCallback
+
+        // Play a sound to indicate the take picture action succeeded
+        //AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        //audio.playSoundEffect(Sounds.SUCCESS);
+
+        // Take the picture
+        //_camera.takePicture(null, null, new SavePicture());
 
         return true;
       default:
@@ -90,21 +108,64 @@ public class CameraActivity extends Activity {
     }
   }
 
-  public String savePicture(Bitmap image) throws IOException {
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data)  {
+    if (RESULT_OK == resultCode) {
+      // Insert the thumbnail into the timeline
+      insertIntoTimeline(data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH));
+    }
+
+    super.onActivityResult(requestCode, resultCode, data);
+  }
+
+  private String getFilename(boolean isThumbnail) {
     android.util.Log.d("CameraActivity", "Saving picture...");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
-    String imageFilename = sdf.format(new Date()) + ".jpg";
-    String imageFullPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + File.separator + "Camera" + File.separator + imageFilename;
-    //android.util.Log.d("CameraActivity", "external dcim dir: " + Environment.getExternalStoragePublicDirectory(Environment.));
 
+    // Build the image filename
+    StringBuilder imageFilename = new StringBuilder();
+    imageFilename.append(sdf.format(new Date()));
+    if (isThumbnail) {
+      imageFilename.append("_tn");
+    }
+    imageFilename.append(".jpg");
+
+    return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + File.separator + "Camera" + File.separator + imageFilename;
+  }
+
+  private void insertIntoTimeline(String imageFilename) {
+    // Create a URI from the file
+    Uri uri = Uri.fromFile(new File(imageFilename));
+    android.util.Log.d("CameraActivity", "imageFilename: " + imageFilename);
+    android.util.Log.d("CameraActivity", "uri: " + uri);
+
+    // Create the card
+    Card photoCard = new Card(_context);
+    photoCard.setImageLayout(Card.ImageLayout.FULL);
+    photoCard.addImage(uri);
+
+    // Insert the card into the timeline
+    android.util.Log.d("CameraActivity", "Inserting picture into timeline.");
+    TimelineManager.from(_context).insert(photoCard);
+  }
+
+  // Part of Option 2
+  public static Bitmap scaleImage(Bitmap source, float scale) {
+    Matrix matrix = new Matrix();
+    matrix.postScale(scale, scale);
+
+    return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+  }
+
+  // Part of Option 2
+  public void savePicture(Bitmap image, String filename) throws IOException {
     FileOutputStream fos = null;
     try {
-      fos = new FileOutputStream(imageFullPath);
+      fos = new FileOutputStream(filename);
 
       image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
 
       android.util.Log.d("CameraActivity", "Picture saved.");
-      return imageFullPath;
     }
     catch (IOException e) {
       e.printStackTrace();
@@ -137,6 +198,7 @@ public class CameraActivity extends Activity {
           // Start the preview
           _camera.setPreviewDisplay(_surfaceHolder);
           _camera.startPreview();
+          _previewOn = true;
         }
         catch (IOException e) {
           e.printStackTrace();
@@ -151,31 +213,30 @@ public class CameraActivity extends Activity {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-      // Stop the preview and release the camera
-      _camera.stopPreview();
-      _camera.release();
-      android.util.Log.d("CameraActivity", "surfaceDestroyed.");
+      if (_previewOn) {
+        // Stop the preview and release the camera
+        _camera.stopPreview();
+        _camera.release();
+      }
     }
   }
 
   class SavePicture implements Camera.PictureCallback {
     @Override
     public void onPictureTaken(byte[] bytes, Camera camera) {
-      android.util.Log.d("CameraActivity", "In onPictureTaken().");
+      android.util.Log.d("CameraActivity", "Picture taken.");
       Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
       try {
         // Save the image
-        String imageFilename = savePicture(image);
+        String imageFilename = getFilename(false);
+        savePicture(image, imageFilename);
 
-        Uri uri = Uri.fromFile(new File(imageFilename));
-        android.util.Log.d("CameraActivity", "imageFilename: " + imageFilename);
-        android.util.Log.d("CameraActivity", "uri: " + uri);
-        Card photoCard = new Card(_context);
-        photoCard.setImageLayout(Card.ImageLayout.FULL);
-        photoCard.addImage(uri);
-        android.util.Log.d("CameraActivity", "Inserting into timeline.");
-        TimelineManager.from(_context).insert(photoCard);
+        String thumbnailImageFilename = getFilename(true);
+        savePicture(scaleImage(image, (float)0.85), thumbnailImageFilename);
+
+        // This doesn't work unless you have a thumbnail
+        insertIntoTimeline(thumbnailImageFilename);
       }
       catch (IOException e) {
         e.printStackTrace();
