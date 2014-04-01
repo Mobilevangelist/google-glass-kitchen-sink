@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/cameraMenuItem"
-          android:icon="@drawable/ic_camera_50"
-          android:title="@string/camera"
-            />
     <item android:id="@+id/voiceInputMenuItem"
           android:icon="@drawable/ic_message_50"
           android:title="@string/voice_input"
+            />
+    <item android:id="@+id/textToSpeechMenuItem"
+          android:icon="@drawable/ic_text_to_speech_50"
+          android:title="@string/text_to_speech"
             />
     <item android:id="@+id/dpadInputMenuItem"
           android:icon="@drawable/ic_dpad_input_50"
@@ -17,9 +17,9 @@
           android:icon="@drawable/ic_gesture_input_50"
           android:title="@string/gesture_input"
             />
-    <item android:id="@+id/textToSpeechMenuItem"
-          android:icon="@drawable/ic_text_to_speech_50"
-          android:title="@string/text_to_speech"
+    <item android:id="@+id/cameraMenuItem"
+          android:icon="@drawable/ic_camera_50"
+          android:title="@string/camera"
             />
     <item android:id="@+id/accelerometerMenuItem"
           android:icon="@drawable/ic_accelerometer_50"

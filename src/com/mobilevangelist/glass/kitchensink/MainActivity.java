@@ -68,16 +68,15 @@ public class MainActivity extends Activity {
   public boolean onOptionsItemSelected(MenuItem item) {
     // Handle item selection
     switch (item.getItemId()) {
-      case R.id.cameraMenuItem: {
-        // Open camera preview
-        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.CAMERA");
+      case R.id.voiceInputMenuItem: {
+        // Open new activity to do voice input
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.VOICE_INPUT");
         startActivity(intent);
 
         return true;
       }
-      case R.id.voiceInputMenuItem: {
-        // Open new activity to do voice input
-        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.VOICE_INPUT");
+      case R.id.textToSpeechMenuItem: {
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.TEXT_TO_SPEECH");
         startActivity(intent);
 
         return true;
@@ -94,8 +93,9 @@ public class MainActivity extends Activity {
 
         return true;
       }
-      case R.id.textToSpeechMenuItem: {
-        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.TEXT_TO_SPEECH");
+      case R.id.cameraMenuItem: {
+        // Open camera preview
+        Intent intent = new Intent("com.mobilevangelist.glass.kitchensink.CAMERA");
         startActivity(intent);
 
         return true;
