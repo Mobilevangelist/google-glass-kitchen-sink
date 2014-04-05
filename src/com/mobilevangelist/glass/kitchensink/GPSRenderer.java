@@ -18,6 +18,7 @@ package com.mobilevangelist.glass.kitchensink;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -133,6 +134,7 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
     }
 
     if (canvas != null) {
+      canvas.drawColor(Color.BLACK);
       _gpsLayout.draw(canvas);
 
       try {
