@@ -29,12 +29,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.glass.timeline.DirectRenderingCallback;
+
 import java.util.Date;
 
 /**
  * Render the GPS view.
  */
-public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
+public class GPSRenderer implements DirectRenderingCallback, LocationListener {
   private SurfaceHolder _holder;
 
   private RelativeLayout _gpsLayout;
@@ -88,6 +90,12 @@ public class GPSRenderer implements SurfaceHolder.Callback, LocationListener {
   @Override
   public void surfaceDestroyed(SurfaceHolder holder) {
     _gps.haltUpdates();
+  }
+
+
+  @Override
+  public void renderingPaused(SurfaceHolder surfaceHolder, boolean b) {
+
   }
 
   @Override
