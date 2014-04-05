@@ -13,7 +13,7 @@
     <string name="gesture_input">Gesture input</string>
     <string name="text_to_speech">Text to Speech</string>
     <string name="accelerometer">Accelerometer</string>
-    <string name="GPS">GPS</string>
+    <string name="GPS">GPS Live Card</string>
     <string name="light">Light sensor</string>
     <string name="gravity">Gravity sensor</string>
     <string name="gyroscope">Gyroscope sensor</string>
