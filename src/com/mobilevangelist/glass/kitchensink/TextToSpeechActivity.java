@@ -39,7 +39,7 @@ public class TextToSpeechActivity extends Activity {
     setContentView(R.layout.layout_main);
 
     TextView titleTextView = (TextView)findViewById(R.id.title);
-    titleTextView.setText(R.string.gettysburg_address);
+    titleTextView.setText(R.string.star_wars);
 
     TextView instructionsTextView = (TextView)findViewById(R.id.status);
     instructionsTextView.setText(R.string.tap_to_read);
@@ -61,7 +61,7 @@ public class TextToSpeechActivity extends Activity {
         _speech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
           @Override
           public void onInit(int status) {
-            _speech.speak(getResources().getString(R.string.gettysburg_address), TextToSpeech.QUEUE_FLUSH, null);
+            _speech.speak(getResources().getString(R.string.star_wars), TextToSpeech.QUEUE_FLUSH, null);
           }
         });
 
