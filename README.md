@@ -28,6 +28,7 @@ Feature set examples include:
   * Hardware camera button
   * With the ACTION_IMAGE_CAPTURE intent
   * Manually
+- Insert the picture as a static card in the timeline if using one of the last two methods
 
 ###Accelerometer
 - Read values from the accelerometer
