@@ -25,7 +25,7 @@ import android.os.Looper;
 import java.util.List;
 
 /**
- * GPS service to read GPS coordinates.
+ * GPS Thread that gets the GPS location.
  */
 public class GPSThread extends Thread {
   private final static long MIN_TIME = 500;  // 1/2 sec
@@ -43,11 +43,13 @@ public class GPSThread extends Thread {
 
   @Override
   public void run() {
+    // Enclose update in Looper to execute in UI thread
     Looper.prepare();
       getUpdates();
     Looper.loop();
   }
 
+  // Initialize the GPS services
   private void init(Context context) {
     _locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -57,6 +59,7 @@ public class GPSThread extends Thread {
     _providers = _locationManager.getProviders(criteria, true);
   }
 
+  // Get the GPS coordinates
   private void getUpdates() {
     for (String provider : _providers) {
       android.util.Log.d("GPSThread", "Calling requestLocationUpdates from " + provider);
@@ -64,6 +67,7 @@ public class GPSThread extends Thread {
     }
   }
 
+  // Stop getting updates
   public void haltUpdates() {
     android.util.Log.d("GPSThread", "Halting requestLocationUpdates.");
     _locationManager.removeUpdates(_listener);

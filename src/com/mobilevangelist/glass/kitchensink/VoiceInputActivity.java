@@ -27,7 +27,7 @@ import com.google.android.glass.app.Card;
 import java.util.List;
 
 /**
- * Main activity.
+ * VoiceInput activity.
  */
 public class VoiceInputActivity extends Activity {
   private final static int SPEECH_REQUEST = 0;

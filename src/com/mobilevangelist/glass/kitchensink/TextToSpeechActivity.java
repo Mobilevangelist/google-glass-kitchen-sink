@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.google.android.glass.media.Sounds;
 
 /**
- * Main activity.
+ * TextToSpeech activity.
  */
 public class TextToSpeechActivity extends Activity {
   private TextToSpeech _speech;
@@ -38,26 +38,25 @@ public class TextToSpeechActivity extends Activity {
 
     setContentView(R.layout.layout_main);
 
+    // Reuse the main layout and change the text
     TextView titleTextView = (TextView)findViewById(R.id.title);
     titleTextView.setText(R.string.star_wars);
 
     TextView instructionsTextView = (TextView)findViewById(R.id.status);
     instructionsTextView.setText(R.string.tap_to_read);
   }
-  /**
-   * Handle the tap event from the touchpad.
-   */
+
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
-    AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     switch (keyCode) {
       // Handle tap events.
       case KeyEvent.KEYCODE_DPAD_CENTER:
-      case KeyEvent.KEYCODE_ENTER:
-
-        // Status message below the main text in the alternative UX layout
+      case KeyEvent.KEYCODE_ENTER: {
+        // Play a tap sound
+        AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audio.playSoundEffect(Sounds.TAP);
 
+        // Read the text aloud
         _speech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
           @Override
           public void onInit(int status) {
@@ -66,8 +65,10 @@ public class TextToSpeechActivity extends Activity {
         });
 
         return true;
-      default:
+      }
+      default: {
         return super.onKeyDown(keyCode, event);
+      }
     }
   }
 

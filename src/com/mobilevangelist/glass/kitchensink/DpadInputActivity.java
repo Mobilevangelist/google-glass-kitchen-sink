@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.google.android.glass.media.Sounds;
 
 /**
- * Main activity.
+ * DPad Input activity.
  */
 public class DpadInputActivity extends Activity {
   private TextView _titleTextView;
@@ -40,6 +40,7 @@ public class DpadInputActivity extends Activity {
 
     setContentView(R.layout.layout_main);
 
+    // Save the TextViews for updating later
     _titleTextView = (TextView)findViewById(R.id.title);
     _titleTextView.setText(R.string.dpad_input);
     _statusTextView = (TextView)findViewById(R.id.status);
@@ -55,9 +56,9 @@ public class DpadInputActivity extends Activity {
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     switch (keyCode) {
-      // Handle tap events.
+      // Tap
       case KeyEvent.KEYCODE_DPAD_CENTER:
-      case KeyEvent.KEYCODE_ENTER:
+      case KeyEvent.KEYCODE_ENTER: {
 
         // Status message below the main text in the alternative UX layout
         audio.playSoundEffect(Sounds.TAP);
@@ -67,14 +68,18 @@ public class DpadInputActivity extends Activity {
         _swipeDownCount = 0;
 
         return true;
-      case KeyEvent.KEYCODE_CAMERA:
+      }
+      // Hardware camera button
+      case KeyEvent.KEYCODE_CAMERA: {
 
         _titleTextView.setText(R.string.camera_button);
         _statusTextView.setText(R.string.empty_string);
         _swipeDownCount = 0;
 
         return true;
-      case KeyEvent.KEYCODE_BACK:
+      }
+      // Swipe down - print the capture the first time and perform the cancel the second time
+      case KeyEvent.KEYCODE_BACK: {
 
         // Status message below the main text in the alternative UX layout
         audio.playSoundEffect(Sounds.DISMISSED);
@@ -87,8 +92,10 @@ public class DpadInputActivity extends Activity {
           return true;
         }
         // Else do the back action
-      default:
+      }
+      default: {
         return super.onKeyDown(keyCode, event);
+      }
     }
   }
 }

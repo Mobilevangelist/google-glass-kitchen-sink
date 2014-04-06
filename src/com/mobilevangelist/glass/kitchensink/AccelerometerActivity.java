@@ -51,6 +51,8 @@ public class AccelerometerActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.layout_accelerometer);
+
+    // Save the TextViews for updating later
     _gravityXTextView = (TextView)findViewById(R.id.gravityXValueTextView);
     _gravityYTextView = (TextView)findViewById(R.id.gravityYValueTextView);
     _gravityZTextView = (TextView)findViewById(R.id.gravityZValueTextView);
@@ -58,6 +60,7 @@ public class AccelerometerActivity extends Activity {
     _linearAccelYTextView = (TextView)findViewById(R.id.linearAccelerationYValueTextView);
     _linearAccelZTextView = (TextView)findViewById(R.id.linearAccelerationZValueTextView);
 
+    // Initialize the accelerometer and set up the listener for data
     _sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
     _accelerometer = _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     _accelerometerListener = new AccelerometerListener();
@@ -67,6 +70,7 @@ public class AccelerometerActivity extends Activity {
   public void onResume() {
     super.onResume();
 
+    // Restart the accelerometer
     _sensorManager.registerListener(_accelerometerListener, _accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
   }
 
@@ -74,6 +78,7 @@ public class AccelerometerActivity extends Activity {
   public void onPause() {
     super.onPause();
 
+    // Stop the accelerometer
     _sensorManager.unregisterListener(_accelerometerListener);
   }
 
@@ -109,6 +114,7 @@ public class AccelerometerActivity extends Activity {
 
       DecimalFormat df = new DecimalFormat("0.0");
 
+      // Update the UX
       _gravityXTextView.setText(df.format(gravity[X]));
       _gravityYTextView.setText(df.format(gravity[Y]));
       _gravityZTextView.setText(df.format(gravity[Z]));

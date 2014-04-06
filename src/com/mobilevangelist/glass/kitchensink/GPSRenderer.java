@@ -54,6 +54,7 @@ public class GPSRenderer implements DirectRenderingCallback, LocationListener {
     LayoutInflater inflater = LayoutInflater.from(context);
     _gpsLayout = (RelativeLayout) inflater.inflate(R.layout.layout_gps, null);
 
+    // Save the TextViews for updating later
     _waitingTextView = (TextView) _gpsLayout.findViewById(R.id.waitingTextView);
     _coordinateLayout = (RelativeLayout) _gpsLayout.findViewById(R.id.coordinateLayout);
     _coordinateLayout.setVisibility(View.INVISIBLE);
@@ -64,12 +65,41 @@ public class GPSRenderer implements DirectRenderingCallback, LocationListener {
     _context = context;
   }
 
+  // Redraw the LiveCard
+  private  void draw() {
+    Canvas canvas = null;
+
+    try {
+      canvas = _holder.lockCanvas();
+    }
+    catch (RuntimeException e) {
+      android.util.Log.d("GPSRenderer", "RuntimeException", e);
+    }
+
+    if (canvas != null) {
+      canvas.drawColor(Color.BLACK);  // Clear out the old text
+
+      _gpsLayout.draw(canvas);
+
+      try {
+        _holder.unlockCanvasAndPost(canvas);
+      }
+      catch (RuntimeException e) {
+        Log.d("GPSRenderer", "RuntimeException: ", e);
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------
+  // DirectRenderingCallback methods
+  // ----------------------------------------------------------------------
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
     android.util.Log.d("GPSRenderer", "In surfaceCreated()");
 
     _holder = holder;
 
+    // Start the GPS thread
     _gps = new GPSThread(_context, this);
     _gps.start();
   }
@@ -98,6 +128,9 @@ public class GPSRenderer implements DirectRenderingCallback, LocationListener {
 
   }
 
+  // ----------------------------------------------------------------------
+  // LocationListener methods
+  // ----------------------------------------------------------------------
   @Override
   public void onLocationChanged(Location location) {
     long locationTime = location.getTime();
@@ -107,9 +140,11 @@ public class GPSRenderer implements DirectRenderingCallback, LocationListener {
     android.util.Log.d("GPSRenderer", "location time: " + new Date(locationTime));
     android.util.Log.d("GPSRenderer", "");
 
+    // Hide the waiting text and show the coordinates
     _waitingTextView.setVisibility(View.INVISIBLE);
     _coordinateLayout.setVisibility(View.VISIBLE);
 
+    // Update the coordinates
     _latitudeTextView.setText(String.valueOf(location.getLatitude()));
     _longitudeTextView.setText(String.valueOf(location.getLongitude()));
 
@@ -129,28 +164,5 @@ public class GPSRenderer implements DirectRenderingCallback, LocationListener {
   @Override
   public void onProviderDisabled(String provider) {
 
-  }
-
-  private  void draw() {
-    Canvas canvas = null;
-
-    try {
-      canvas = _holder.lockCanvas();
-    }
-    catch (RuntimeException e) {
-      android.util.Log.d("GPSRenderer", "RuntimeException", e);
-    }
-
-    if (canvas != null) {
-      canvas.drawColor(Color.BLACK);
-      _gpsLayout.draw(canvas);
-
-      try {
-        _holder.unlockCanvasAndPost(canvas);
-      }
-      catch (RuntimeException e) {
-        Log.d("GPSRenderer", "RuntimeException: ", e);
-      }
-    }
   }
 }

@@ -24,7 +24,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 /**
- * GPS Menu activity.
+ * GPS Menu activity - the sole purpose of this activity is for showing a menu
+ * for the LiveCard.
  */
 public class GPSMenuActivity extends Activity {
   @Override
@@ -32,6 +33,7 @@ public class GPSMenuActivity extends Activity {
     super.onCreate(savedInstanceState);
   }
 
+  // Create the menu
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.gps_menu, menu);

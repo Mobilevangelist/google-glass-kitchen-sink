@@ -35,7 +35,10 @@ public class GPSService extends Service {
 
   @Override
   public void onCreate() {
+    // Initialize the TimelineManager
     _timelineManager = TimelineManager.from(this);
+
+    // Instantiate the GPSRenderer
     _renderer = new GPSRenderer(this);
   }
 
@@ -51,15 +54,16 @@ public class GPSService extends Service {
     if (_liveCard == null) {
       _liveCard = _timelineManager.createLiveCard("KitchenSinkGPS");
 
+      // Set the renderer for the LiveCard
       _liveCard.setDirectRenderingEnabled(true);
       _liveCard.getSurfaceHolder().addCallback(_renderer);
 
       // Display the options menu when the live card is tapped.
       Intent menuIntent = new Intent(this, GPSMenuActivity.class);
       menuIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
       _liveCard.setAction(PendingIntent.getActivity(this, 0, menuIntent, 0));
 
+      // Publish
       _liveCard.publish(LiveCard.PublishMode.REVEAL);
     }
 
@@ -70,6 +74,7 @@ public class GPSService extends Service {
   public void onDestroy() {
     android.util.Log.d("GPSService", "GPSService destroyed");
 
+    // Clean up
     if ((null != _liveCard) && (_liveCard.isPublished())) {
       _liveCard.unpublish();
       _liveCard.getSurfaceHolder().removeCallback(_renderer);

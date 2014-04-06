@@ -28,6 +28,7 @@ public class GPSActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    // Start the GPS service and close
     startService(new Intent(this, GPSService.class));
     finish();
   }

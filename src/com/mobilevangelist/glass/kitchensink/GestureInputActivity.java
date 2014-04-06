@@ -28,7 +28,7 @@ import com.google.android.glass.touchpad.GestureDetector;
 import java.util.HashMap;
 
 /**
- * Main activity.
+ * Gesture Input activity.
  */
 public class GestureInputActivity extends Activity {
   private GestureDetector _gestureDetector;
@@ -36,6 +36,7 @@ public class GestureInputActivity extends Activity {
   private TextView _titleTextView;
   private TextView _instructionsTextView;
 
+  // Create a map that converts the gesture to a string
   private static HashMap<Gesture, Integer> _gestureMap = new HashMap<Gesture, Integer>();
   static {
     _gestureMap.put(Gesture.TAP, R.string.tap);
@@ -60,12 +61,14 @@ public class GestureInputActivity extends Activity {
 
     setContentView(R.layout.layout_main);
 
+    // Save the TextViews for updating later
     _titleTextView = (TextView)findViewById(R.id.title);
     _titleTextView.setText(R.string.gesture_input);
 
     _instructionsTextView = (TextView)findViewById(R.id.status);
     _instructionsTextView.setText(R.string.gesture_instructions);
 
+    // Initialze the GestureDetector
     _gestureDetector = new GestureDetector(this);
     _gestureDetector.setBaseListener(new GestureListener());
     _gestureDetector.setFingerListener(new FingerGestureListener());
@@ -78,6 +81,7 @@ public class GestureInputActivity extends Activity {
   */
   @Override
   public boolean onGenericMotionEvent(MotionEvent event) {
+    // Call the GestureDetector on any motion event
     if (null != _gestureDetector) {
       return _gestureDetector.onMotionEvent(event);
     }
@@ -85,6 +89,7 @@ public class GestureInputActivity extends Activity {
     return false;
   }
 
+  // Captures gestures and prints them out
   private class GestureListener implements GestureDetector.BaseListener {
     @Override
     public boolean onGesture(Gesture gesture) {
@@ -101,6 +106,7 @@ public class GestureInputActivity extends Activity {
     }
   }
 
+  // Example of a listener for a finger gesture
   private class FingerGestureListener implements GestureDetector.FingerListener {
     @Override
     public void onFingerCountChanged(int i, int i2) {
@@ -108,6 +114,7 @@ public class GestureInputActivity extends Activity {
     }
   }
 
+  // Example of a listener for a two finger gesture
   private class TwoFingerGestureListener implements GestureDetector.TwoFingerScrollListener {
     @Override
     public boolean onTwoFingerScroll(float v, float v2, float v3) {
@@ -116,6 +123,7 @@ public class GestureInputActivity extends Activity {
     }
   }
 
+  // Example of a listener for a scroll gesture
   private class ScrollListener implements GestureDetector.ScrollListener {
     @Override
     public boolean onScroll(float v, float v2, float v3) {
