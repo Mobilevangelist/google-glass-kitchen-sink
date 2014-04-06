@@ -5,7 +5,7 @@ Glass Development Kit feature set examples
 1. Open the app using "Ok, Glass. Kitchen sink" or by finding Kitchen Sink in your Ok, Glass submenu.
 2. Tap to get the menu of feature examples.
 
-Feature set examples include:
+##Feature set examples:
 
 ###Glass Menu
 - Options menu in the MainActiviy
@@ -33,9 +33,20 @@ Feature set examples include:
 ###Accelerometer
 - Read values from the accelerometer
 
-###GPS Live Card
+###GPS
 - Get GPS coordinates from a connected phone
 - Show in a LiveCard
+
+##User interface examples:
+
+###Timeline insert of a Static Card
+- See Camera example
+
+###LiveCard
+- See GPS example
+
+###Immersion
+- This app as a whole and the accelerometer display are examples of immersion
 
 Building the code
 ---------------------
