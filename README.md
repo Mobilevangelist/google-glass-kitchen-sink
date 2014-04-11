@@ -60,4 +60,4 @@ Author
 -----
 - [Norton Lam](http://google.com/+NortonLam) / [mobilevangelist.com](mobilevangelist.com)
 - [Follow me on G+](http://google.com/+NortonLam) to be notified about future versions
-- Twitter: [@orchinib](www.twitter.com/orchinib)
+- Twitter: [@orchinib](http://www.twitter.com/orchinib)
