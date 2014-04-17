@@ -28,7 +28,6 @@ Glass Development Kit feature set examples
   * Hardware camera button
   * With the ACTION_IMAGE_CAPTURE intent
   * Manually
-- Insert the picture as a static card in the timeline if using one of the last two methods
 
 ###Accelerometer
 - Read values from the accelerometer
@@ -38,9 +37,6 @@ Glass Development Kit feature set examples
 - Show in a LiveCard
 
 ##User interface examples:
-
-###Timeline insert of a Static Card
-- See Camera example
 
 ###LiveCard
 - See GPS example
