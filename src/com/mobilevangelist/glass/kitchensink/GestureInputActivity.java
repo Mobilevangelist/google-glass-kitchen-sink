@@ -36,6 +36,8 @@ public class GestureInputActivity extends Activity {
   private TextView _titleTextView;
   private TextView _instructionsTextView;
 
+  private int _swipeDownCount;
+
   // Create a map that converts the gesture to a string
   private static HashMap<Gesture, Integer> _gestureMap = new HashMap<Gesture, Integer>();
   static {
@@ -96,11 +98,19 @@ public class GestureInputActivity extends Activity {
       Log.d("GestureInputActivity", "BaseListener called");
       Log.d("GestureInputActivity", getResources().getString(_gestureMap.get(gesture)));
 
-      // NOTE: SWIPE_DOWN events do not seem to register in this listener - could be a bug in the GDK
-
       // Show the gesture in the Glass interface
       _titleTextView.setText(_gestureMap.get(gesture));
       _instructionsTextView.setText(R.string.empty_string);
+
+      if (Gesture.SWIPE_DOWN == gesture) {
+        _instructionsTextView.setText(R.string.swipe_to_go_back);
+        _swipeDownCount++;
+
+        return (_swipeDownCount < 2);
+      }
+      else {
+        _swipeDownCount = 0;
+      }
 
       return true;
     }

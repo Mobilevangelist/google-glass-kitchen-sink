@@ -25,7 +25,6 @@ import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.media.AudioManager;  // For option 2
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -33,10 +32,7 @@ import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.google.android.glass.app.Card;
-import com.google.android.glass.media.CameraManager;
 import com.google.android.glass.media.Sounds;  // For option 2
-import com.google.android.glass.timeline.TimelineManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -116,8 +112,7 @@ public class CameraActivity extends Activity {
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data)  {
     if (RESULT_OK == resultCode) {
-      // Insert the thumbnail into the timeline
-      insertIntoTimeline(data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH));
+      // Do something
     }
 
     super.onActivityResult(requestCode, resultCode, data);
@@ -178,23 +173,6 @@ public class CameraActivity extends Activity {
     }
   }
 
-  // Insert the captured picture into the timeline
-  private void insertIntoTimeline(String imageFilename) {
-    // Create a URI from the file
-    Uri uri = Uri.fromFile(new File(imageFilename));
-    android.util.Log.d("CameraActivity", "imageFilename: " + imageFilename);
-    android.util.Log.d("CameraActivity", "uri: " + uri);
-
-    // Create the card
-    Card photoCard = new Card(_context);
-    photoCard.setImageLayout(Card.ImageLayout.FULL);
-    photoCard.addImage(uri);
-
-    // Insert the card into the timeline
-    android.util.Log.d("CameraActivity", "Inserting picture into timeline.");
-    TimelineManager.from(_context).insert(photoCard);
-  }
-
   // Handling of the camera preview
   class SurfaceHolderCallback implements SurfaceHolder.Callback {
     @Override
@@ -245,13 +223,6 @@ public class CameraActivity extends Activity {
         // Save the image
         String imageFilename = getFilename(false);
         savePicture(image, imageFilename);
-
-        // Create a thumbnail for the timeline - anything bigger than this doesn't show up
-        String thumbnailImageFilename = getFilename(true);
-        savePicture(scaleImage(image, (float)0.85), thumbnailImageFilename);
-
-        // This doesn't work unless you have a thumbnail
-        insertIntoTimeline(thumbnailImageFilename);
       }
       catch (IOException e) {
         e.printStackTrace();

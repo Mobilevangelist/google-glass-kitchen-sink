@@ -23,21 +23,18 @@ import android.os.IBinder;
 import android.view.SurfaceHolder;
 
 import com.google.android.glass.timeline.LiveCard;
-import com.google.android.glass.timeline.TimelineManager;
 
 /**
  * GPS service to read GPS coordinates.
  */
 public class GPSService extends Service {
-  private TimelineManager _timelineManager;
+  public static final String KITCHEN_SINK_GPS = "KitchenSinkGPS";
+
   private LiveCard _liveCard;
   private SurfaceHolder.Callback _renderer;
 
   @Override
   public void onCreate() {
-    // Initialize the TimelineManager
-    _timelineManager = TimelineManager.from(this);
-
     // Instantiate the GPSRenderer
     _renderer = new GPSRenderer(this);
   }
@@ -52,7 +49,7 @@ public class GPSService extends Service {
     android.util.Log.d("GPSService", "In onStartCommand()");
 
     if (_liveCard == null) {
-      _liveCard = _timelineManager.createLiveCard("KitchenSinkGPS");
+      _liveCard = new LiveCard(this, KITCHEN_SINK_GPS);
 
       // Set the renderer for the LiveCard
       _liveCard.setDirectRenderingEnabled(true);

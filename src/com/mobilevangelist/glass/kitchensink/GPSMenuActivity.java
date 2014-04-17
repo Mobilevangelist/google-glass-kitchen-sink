@@ -28,9 +28,24 @@ import android.view.MenuItem;
  * for the LiveCard.
  */
 public class GPSMenuActivity extends Activity {
+  private boolean _attachedToWindow;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+  }
+
+  @Override
+  public void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    _attachedToWindow = true;
+    openOptionsMenu();
+  }
+
+  @Override
+  public void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    _attachedToWindow = false;
   }
 
   // Create the menu
@@ -54,13 +69,6 @@ public class GPSMenuActivity extends Activity {
         return super.onOptionsItemSelected(item);
       }
     }
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-
-    openOptionsMenu();
   }
 
   @Override

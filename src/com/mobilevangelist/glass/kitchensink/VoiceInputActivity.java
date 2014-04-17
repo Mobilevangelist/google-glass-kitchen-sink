@@ -59,7 +59,7 @@ public class VoiceInputActivity extends Activity {
       // Add the text to the view so the user knows we retrieved it correctly
       Card card = new Card(this);
       card.setText(spokenText);
-      View cardView = card.toView();
+      View cardView = card.getView();
       setContentView(cardView);
     }
 
